@@ -3,14 +3,14 @@
 /** Memory game: find matching pairs of cards and flip both of them. */
 
 const FOUND_MATCH_WAIT_MSECS = 1000;
-const COLORS = [
-  "red", "blue", "green", "orange", "purple",
-  "red", "blue", "green", "orange", "purple",
+const SYMBOLS = [
+  'bulb', 'camera', 'clouds', 'house', 'link', 'music', 'robot', 'rocket', 'tack', 'trash',
+  'bulb', 'camera', 'clouds', 'house', 'link', 'music', 'robot', 'rocket', 'tack', 'trash'
 ];
 
-const colors = shuffle(COLORS);
+const symbols = shuffle(SYMBOLS);
 
-createCards(colors);
+createCards(symbols);
 
 
 /** Shuffle array items in-place and return shuffled array. */
@@ -31,35 +31,75 @@ function shuffle(items) {
   return items;
 }
 
-/** Create card for every color in colors (each will appear twice)
+/** Create card for every symbol in symbols (each will appear twice)
  *
  * Each div DOM element will have:
- * - a class with the value of the color
+ * - a class with the value of the symbol
  * - a click event listener for each card to handleCardClick
  */
 
-function createCards(colors) {
+function createCards(symbols) {
   const gameBoard = document.getElementById("game");
 
-  for (let color of colors) {
-    // missing code here ...
+  for (let symbol of symbols) {
+    const card = document.createElement('div');
+    const faceDown = document.createElement('img');
+    faceDown.src = './images/faceDown.png';
+    faceDown.classList.add(symbol);
+    card.classList.add(symbol);
+    card.appendChild(faceDown);
+    gameBoard.appendChild(card);
+    card.addEventListener('click', handleCardClick);
   }
 }
 
-/** Flip a card face-up. */
+let firstFlippedDiv;
+let secondFlippedDiv;
+let card1 = '';
+let card2 = '';
 
 function flipCard(card) {
-  // ... you need to write this ...
+  let flipped = card.classList.value;
+  card.children[0].src = `./images/${flipped}.png`
 }
 
-/** Flip a card face-down. */
-
-function unFlipCard(card) {
-  // ... you need to write this ...
+function unFlipCard() {
+  firstFlippedDiv.children[0].src = './images/facedown.png';
+  secondFlippedDiv.children[0].src = './images/facedown.png';
+  keepFlipping = true;
 }
 
-/** Handle clicking on a card: this could be first-card or second-card. */
+let flipCount = 0;
+let keepFlipping = true;
+
 
 function handleCardClick(evt) {
-  // ... you need to write this ...
+  if (keepFlipping === true) {
+
+if (flipCount === 0) {
+flipCard(evt.currentTarget);
+card1 = evt.currentTarget.classList.value;
+firstFlippedDiv = evt.currentTarget;
+flipCount += 1;
+return;
 }
+if (flipCount === 1) {
+  flipCard(evt.currentTarget)
+  card2 = evt.currentTarget.classList.value;
+  secondFlippedDiv = evt.currentTarget;
+  flipCount += 1;
+  keepFlipping = false;
+
+  if (card1 !== card2) {
+  setTimeout(unFlipCard, 1000);
+  flipCount = 0;
+} else {
+  flipCount = 0;
+  keepFlipping = true;
+  return;
+}
+}
+}
+}
+
+

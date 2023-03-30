@@ -1,9 +1,48 @@
 /* you can add to or change this. */
+ /* color palette:
+  Dark blue: #001219;
+  dark teal: #005f73;
+  teal: #0a9396;
+  aqua: #94d2bd;
+  neutral: #e9d8a6;
+  tangerine: #ee9b00;
+  pumpkin: #ca6702;
+  burnt sienna: #bb3e03;
+  brick: #ae2012;
+  burgundy: #9b2226;
+ */
+
+
+body {
+  background-color: #e9d8a6;
+  color: #ae2012;
+  font-family: 'Comfortaa', cursive;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.section {
+  background-color: #cebc89;
+  margin: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 660px;
+}
 
 #game div {
-  border: 1px solid black;
+  border: 2px solid #001f2b;
   width: 100px;
-  height: 100px;
-  margin: 20px;
+  height: 167px;
+  margin: 12px;
   display: inline-block;
+
 }
+
+.card-down {
+  background-image: "./images/facedown.png";
+}
+
+
+
