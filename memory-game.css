@@ -1,4 +1,4 @@
-/* you can add to or change this. */
+/* you can add to or change this.
  /* color palette:
   Dark blue: #001219;
   dark teal: #005f73;
@@ -12,37 +12,63 @@
   burgundy: #9b2226;
  */
 
+ * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 
 body {
   background-color: #e9d8a6;
   color: #ae2012;
   font-family: 'Comfortaa', cursive;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  text-align: center;
+  height: 100vh;
 }
 
 .section {
   background-color: #cebc89;
   margin: auto;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  width: 660px;
+  width: 620px;
+  height: auto;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  perspective: 1000px;
+  padding: 10px;
 }
 
 #game div {
-  border: 2px solid #001f2b;
   width: 100px;
   height: 167px;
-  margin: 12px;
+  margin: 10px;
   display: inline-block;
-
+  position: relative;
+  transform: scale(1);
+  transform-style: preserve-3d;
+  transition: transform .5s;
 }
 
-.card-down {
-  background-image: "./images/facedown.png";
+#game div:active {
+  transform: scale(0.97);
+  transition: transform .2s;
 }
 
+#game div.flip {
+  transform: rotateY(180deg)
+}
+
+.faceUp,
+.faceDown {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 10px;
+  backface-visibility: hidden;
+}
+
+.faceUp {
+  transform: rotateY(180deg);
+}
 
 
