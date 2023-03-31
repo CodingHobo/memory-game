@@ -4,7 +4,7 @@
 
 const FOUND_MATCH_WAIT_MSECS = 1000;
 const SYMBOLS = [
-  'bulb', 'camera', 'clouds', 'house', 'link', 'music', 'robot', 'rocket', 'tack', 'trash',
+  'bulb', 'camera', 'clouds', 'house', 'link', 'music', 'robot', 'rocket', 'tack', 'trash,
   'bulb', 'camera', 'clouds', 'house', 'link', 'music', 'robot', 'rocket', 'tack', 'trash'
 ];
 
@@ -65,7 +65,7 @@ let hasBeenFlipped = false;
 let stopClicks = false;
 let card1, card2;
 
-let currentScore = 1;
+let currentScore = 0;
 let trackScore = [];
 let matchCount = 0;
 let bestScore = '--';
@@ -89,22 +89,46 @@ return;
 }
 
 card2 = this;
-
-let currScore = document.getElementById('currentScore');
-currScore.innerHTML = currentScore;
 currentScore += 1;
+updateScore();
 
 checkForMatch();
+
 }
+
+function updateScore () {
+  let currScore = document.getElementById('currentScore');
+  currScore.innerHTML = currentScore;
+}
+
 
 function checkForMatch () {
   if (card1.classList[0] === card2.classList[0]) {
   disableCards();
   matchCount += 1;
-      if (matchCount === 10) {
-        trackScore.push(currentScore -1);
-        displayBestScore();
-  }
+
+  if (matchCount === 10) {
+    trackScore.push(currentScore);
+    displayBestScore();
+
+    let cards = document.querySelectorAll('#game > div')
+
+
+    let tryAgainBtn = document.getElementById('retry');
+    tryAgainBtn.addEventListener('click', function () {
+      currentScore = 0;
+      updateScore();
+      matchCount = 0;
+      for (let card of cards) {
+      card.classList.remove('flip');
+      card.addEventListener('click', flipCard);
+      stopClicks = false;
+      hasBeenFlipped = false;
+      }
+    })
+}
+
+
   } else {
     unFlipCards();
   }
@@ -113,8 +137,10 @@ function checkForMatch () {
 function disableCards() {
   card1.removeEventListener('click', flipCard);
   card2.removeEventListener('click', flipCard);
+  hasBeenFlipped = false;
+  stopClicks = false;
 
-  resetBoard();
+  // resetBoard();
 }
 
 function unFlipCards () {
@@ -148,23 +174,9 @@ function resetBoard() {
     best.innerHTML = bestScore;
   }
 
-// let tryAgainBtn = document.getElementById('retry');
-// tryAgainBtn.addEventListener('click', tryAgain);
 
-// function tryAgain () {
-//   stopClicks = true;
 
-//   card1.classList.remove('flip');
-//   card2.classList.remove('flip');
-//   resetBoard();
-// }
-
-let resetScoresBtn = document.getElementById('reset');
-resetScoresBtn.addEventListener('click', function () {
+let tryAgainBtn = document.getElementById('reset');
+tryAgainBtn.addEventListener('click', function () {
  location.reload();
-})
-
-
-
-
-
+});
