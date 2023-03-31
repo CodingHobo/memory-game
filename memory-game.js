@@ -4,7 +4,7 @@
 
 const FOUND_MATCH_WAIT_MSECS = 1000;
 const SYMBOLS = [
-  'bulb', 'camera', 'clouds', 'house', 'link', 'music', 'robot', 'rocket', 'tack', 'trash,
+  'bulb', 'camera', 'clouds', 'house', 'link', 'music', 'robot', 'rocket', 'tack', 'trash',
   'bulb', 'camera', 'clouds', 'house', 'link', 'music', 'robot', 'rocket', 'tack', 'trash'
 ];
 
@@ -125,22 +125,18 @@ function checkForMatch () {
       stopClicks = false;
       hasBeenFlipped = false;
       }
-    })
-}
-
-
+    });
+  }
   } else {
     unFlipCards();
   }
-}
+  }
 
 function disableCards() {
   card1.removeEventListener('click', flipCard);
   card2.removeEventListener('click', flipCard);
   hasBeenFlipped = false;
   stopClicks = false;
-
-  // resetBoard();
 }
 
 function unFlipCards () {
@@ -151,8 +147,8 @@ function unFlipCards () {
     card1.classList.remove('flip');
     card2.classList.remove('flip');
 
-  resetBoard();
-  }, 1000);
+    resetBoard();
+    }, 1000);
 }
 
 function resetBoard() {
@@ -160,23 +156,21 @@ function resetBoard() {
   stopClicks = false;
   card1 = null;
   card2 = null;
-  }
+}
 
-  function displayBestScore () {
+function displayBestScore () {
     if (trackScore.length === 0) {
     bestScore = '--'
-  } else if (trackScore.length === 1) {
-      bestScore = trackScore[0];
+    } else if (trackScore.length === 1) {
+        bestScore = trackScore[0];
     } else {
-      bestScore = Math.min(...trackScore)
-    }
-    let best = document.getElementById('bestScore');
-    best.innerHTML = bestScore;
-  }
+        bestScore = Math.min(...trackScore)
+      }
+      let best = document.getElementById('bestScore');
+      best.innerHTML = bestScore;
+}
 
-
-
-let tryAgainBtn = document.getElementById('reset');
-tryAgainBtn.addEventListener('click', function () {
- location.reload();
+const tryAgainBtn = document.getElementById('reset');
+  tryAgainBtn.addEventListener('click', function () {
+  location.reload();
 });
