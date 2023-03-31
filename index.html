@@ -14,12 +14,25 @@
   <body>
 
     <h1>Memory Game</h1>
+    <table>
+      <tr>
+        <td>Current Score:</td>
+        <td class="currentScore"><label for="currentScore" id="currentScore"></td>
+        <td>Best Score:</td>
+        <td class="bestScore"><label for="bestScore" id="bestScore"></label></td>
+      </tr>
+    </table>
+    <br>
 
     <section class="section">
       <div id="game"></div>
     </section>
+    <br>
+    <span class="retry"><button id="retry">Try Again</button></span>
+    <span class="reset"><button id="reset">Reset Scores</button></span>
 
-    <script src="memory-game2.js"></script>
+
+    <script src="memory-game.js"></script>
 
   </body>
 

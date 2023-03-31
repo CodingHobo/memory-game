@@ -42,62 +42,129 @@ function createCards(symbols) {
   const gameBoard = document.getElementById("game");
 
   for (let symbol of symbols) {
-    const card = document.createElement('div');
+    const cardDiv = document.createElement('div');
+
     const faceDown = document.createElement('img');
-    faceDown.src = './images/faceDown.png';
-    faceDown.classList.add(symbol);
-    card.classList.add(symbol);
-    card.appendChild(faceDown);
-    gameBoard.appendChild(card);
-    card.addEventListener('click', handleCardClick);
+    faceDown.src = './images/facedown.png';
+    faceDown.classList.add('faceDown');
+
+    const faceUp = document.createElement('img');
+    faceUp.src = `./images/${symbol}.png`;
+    faceUp.classList.add('faceUp');
+
+    cardDiv.classList.add(symbol);
+    cardDiv.appendChild(faceUp);
+    cardDiv.appendChild(faceDown);
+
+    gameBoard.appendChild(cardDiv);
+    cardDiv.addEventListener('click', flipCard);
   }
 }
 
-let firstFlippedDiv;
-let secondFlippedDiv;
-let card1 = '';
-let card2 = '';
+let hasBeenFlipped = false;
+let stopClicks = false;
+let card1, card2;
 
-function flipCard(card) {
-  let flipped = card.classList.value;
-  card.children[0].src = `./images/${flipped}.png`
-}
+let currentScore = 1;
+let trackScore = [];
+let matchCount = 0;
+let bestScore = '--';
 
-function unFlipCard() {
-  firstFlippedDiv.children[0].src = './images/facedown.png';
-  secondFlippedDiv.children[0].src = './images/facedown.png';
-  keepFlipping = true;
-}
+displayBestScore();
 
-let flipCount = 0;
-let keepFlipping = true;
-
-
-function handleCardClick(evt) {
-  if (keepFlipping === true) {
-
-if (flipCount === 0) {
-flipCard(evt.currentTarget);
-card1 = evt.currentTarget.classList.value;
-firstFlippedDiv = evt.currentTarget;
-flipCount += 1;
+function flipCard() {
+ if (stopClicks) {
 return;
 }
-if (flipCount === 1) {
-  flipCard(evt.currentTarget)
-  card2 = evt.currentTarget.classList.value;
-  secondFlippedDiv = evt.currentTarget;
-  flipCount += 1;
-  keepFlipping = false;
+if (this === card1) {
+return;
+}
 
-  if (card1 !== card2) {
-  setTimeout(unFlipCard, 1000);
-  flipCount = 0;
-} else {
-  flipCount = 0;
-  keepFlipping = true;
-  return;
+this.classList.add('flip')
+
+if (!hasBeenFlipped) {
+hasBeenFlipped = true;
+card1 = this;
+return;
 }
+
+card2 = this;
+
+let currScore = document.getElementById('currentScore');
+currScore.innerHTML = currentScore;
+currentScore += 1;
+
+checkForMatch();
 }
+
+function checkForMatch () {
+  if (card1.classList[0] === card2.classList[0]) {
+  disableCards();
+  matchCount += 1;
+      if (matchCount === 10) {
+        trackScore.push(currentScore -1);
+        displayBestScore();
+  }
+  } else {
+    unFlipCards();
+  }
 }
+
+function disableCards() {
+  card1.removeEventListener('click', flipCard);
+  card2.removeEventListener('click', flipCard);
+
+  resetBoard();
 }
+
+function unFlipCards () {
+  stopClicks = true;
+
+  setTimeout(() => {
+
+    card1.classList.remove('flip');
+    card2.classList.remove('flip');
+
+  resetBoard();
+  }, 1000);
+}
+
+function resetBoard() {
+  hasBeenFlipped = false;
+  stopClicks = false;
+  card1 = null;
+  card2 = null;
+  }
+
+  function displayBestScore () {
+    if (trackScore.length === 0) {
+    bestScore = '--'
+  } else if (trackScore.length === 1) {
+      bestScore = trackScore[0];
+    } else {
+      bestScore = Math.min(...trackScore)
+    }
+    let best = document.getElementById('bestScore');
+    best.innerHTML = bestScore;
+  }
+
+// let tryAgainBtn = document.getElementById('retry');
+// tryAgainBtn.addEventListener('click', tryAgain);
+
+// function tryAgain () {
+//   stopClicks = true;
+
+//   card1.classList.remove('flip');
+//   card2.classList.remove('flip');
+//   resetBoard();
+// }
+
+let resetScoresBtn = document.getElementById('reset');
+resetScoresBtn.addEventListener('click', function () {
+ location.reload();
+})
+
+
+
+
+
