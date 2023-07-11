@@ -1,6 +1,6 @@
 # memory-game
 
-###Test your memory!
+## Test your memory!
 
 Can you beat your own high score?
 
