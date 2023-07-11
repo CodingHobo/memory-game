@@ -4,6 +4,5 @@
 
 Can you beat your own high score?
 
-![mem-game-start](https://github.com/CodingHobo/memory-game/assets/111654143/0a023544-9e16-4f26-9816-f5a159e48b76)
-
-![mem-game-active](https://github.com/CodingHobo/memory-game/assets/111654143/a1a381de-0c0a-4f9c-8a46-1f4f9072346c)
+![mem-game-start](https://github.com/CodingHobo/memory-game/assets/111654143/0b5380f8-93f2-4983-9c57-0ca0df4965d5)
+![mem-game-active](https://github.com/CodingHobo/memory-game/assets/111654143/f020c8fb-35f9-4d75-97f5-047aad972695)
